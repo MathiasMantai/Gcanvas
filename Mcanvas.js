@@ -9,8 +9,8 @@ class Mcanvas {
 
         //create the canvas
         this.init();
-        console.log("%cMcanvas loaded","color:black");
 
+        console.log("%cMcanvas loaded","color:black");
     }
 
     init() {
@@ -30,40 +30,27 @@ class Mcanvas {
         //append to parent
         document.getElementById(this.parent).appendChild(this.canvas);
     }
+}
 
-    addImage(url, x, y, width, height) {
-        let Mcontext = this.canvas.getContext(this.context);
+class MCircle {
 
-    }
-
-
-    /**
-     * 
-     * @param {*} x 
-     * @param {*} y 
-     * @param {*} width 
-     * @param {*} height 
-     * @param {string} mode mode of reactangle creation. "fill" = filled rectangle, "outline" = outlined rectangle, "transparent" = transparent rectangle
-     * @param {string} color 
-     */
-    drawRect(x, y, width, height, mode, color) {
-        let Mcontext = this.canvas.getContext(this.context);
-        switch(mode) {
-            case "fill":
-                break;
-            case "outline":
-                break;
-            case "transparent":
-                break;
-        }
-    }
-
-    drawCircle() {
-        let Mcontext = this.canvas.getContext(this.context);
+    constructor(context) {
 
     }
 
-    /**
+    drawCircle(origin_x, origin_y, radius, startAngle, endAngle, direction, color, mode) {
+        let Mcontext = this.canvas.getContext(this.context);
+        Mcontext.beginPath();
+        Mcontext.strokeStyle = color;
+        Mcontext.arc(origin_x, origin_y, radius, startAngle, endAngle, direction);
+        Mcontext.stroke();
+
+    }
+}
+
+class MLine {
+
+        /**
      * 
      * @param {*} origin_x 
      * @param {*} origin_y 
@@ -71,16 +58,45 @@ class Mcanvas {
      * @param {*} target_y 
      * @param {string} color color of the line
      */
-    drawLine(origin_x, origin_y, target_x, target_y, lineWidth = 2, color = "black") {
-        let Mcontext = this.canvas.getContext(this.context);
+         drawLine(origin_x, origin_y, target_x, target_y, lineWidth = 2, color = "black") {
+            let Mcontext = this.canvas.getContext(this.context);
+    
+            Mcontext.moveTo(origin_x, origin_y);
+            Mcontext.lineTo(target_x, target_y);
+            Mcontext.lineWidth = lineWidth;
+            Mcontext.strokeStyle = color;
+            Mcontext.stroke();
+        }
 
-        Mcontext.moveTo(origin_x, origin_y);
-        Mcontext.lineTo(target_x, target_y);
-        Mcontext.lineWidth = lineWidth;
-        Mcontext.strokeStyle = color;
-        Mcontext.stroke();
-    }
-
-//END CLASS MCanvas
 }
 
+class MRect {
+
+    /**
+     * 
+     * @param {number} x 
+     * @param {number} y 
+     * @param {number} width 
+     * @param {number} height 
+     * @param {string} mode mode of reactangle creation. "fill" = filled rectangle, "outline" = outlined rectangle, "transparent" = transparent rectangle
+     * @param {string} color 
+     */
+         drawRect(x, y, width, height, mode, color) {
+            let Mcontext = this.canvas.getContext(this.context);
+            switch(mode) {
+                case "fill":
+                    break;
+                case "outline":
+                    break;
+                case "transparent":
+                    break;
+            }
+        }
+
+}
+
+class MImage {
+    addImage(url, x, y, width, height) {
+        let Mcontext = this.canvas.getContext(this.context);
+    }
+}
