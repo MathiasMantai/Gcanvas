@@ -33,18 +33,12 @@ class Mcanvas {
 }
 
 class MCircle {
-
-    constructor(context) {
-
-    }
-
-    drawCircle(origin_x, origin_y, radius, startAngle, endAngle, direction, color, mode) {
-        let Mcontext = this.canvas.getContext(this.context);
+    static drawCircle(canvas, origin_x, origin_y, radius, startAngle, endAngle, direction, color, mode) {
+        let Mcontext = "";
         Mcontext.beginPath();
         Mcontext.strokeStyle = color;
         Mcontext.arc(origin_x, origin_y, radius, startAngle, endAngle, direction);
         Mcontext.stroke();
-
     }
 }
 
@@ -100,3 +94,4 @@ class MImage {
         let Mcontext = this.canvas.getContext(this.context);
     }
 }
+
