@@ -7,3 +7,4 @@ let pieChartOptions  = {
     radius: 10,
 }
 
+let pieChart = pieChart.draw();

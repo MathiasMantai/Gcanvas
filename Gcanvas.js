@@ -101,9 +101,7 @@ class Gimage {
 // GRAPHS
 //---------------------------------------------------------------------------------
 class pieChart {
-    constructor() {
-
-    }
+    draw(dataObject, )
 }
 
 class ringDiagramm {
