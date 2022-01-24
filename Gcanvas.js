@@ -28,7 +28,8 @@ class Gcanvas {
         this.canvas.setAttribute("height", this.height);
 
         //append to parent
-        document.getElementById(this.parent).appendChild(this.canvas);
+        if(this.parent != '') document.getElementById(this.parent).appendChild(this.canvas);
+        else document.appendChild(this.canvas);
     }
 }
 
@@ -42,9 +43,10 @@ class Gcircle {
     }
 }
 
+
 class Gline {
 
-        /**
+    /**
      * 
      * @param {*} origin_x 
      * @param {*} origin_y 
@@ -67,7 +69,6 @@ class Gline {
 class Grect {
 
     /**
-     * 
      * @param {number} x 
      * @param {number} y 
      * @param {number} width 
@@ -86,7 +87,6 @@ class Grect {
                     break;
             }
         }
-
 }
 
 class Gimage {
@@ -95,3 +95,25 @@ class Gimage {
     }
 }
 
+
+
+//---------------------------------------------------------------------------------
+// GRAPHS
+//---------------------------------------------------------------------------------
+class pieChart {
+    constructor() {
+
+    }
+}
+
+class ringDiagramm {
+    constructor() {
+
+    }
+}
+
+class barChart {
+    constructor() {
+
+    }
+}
