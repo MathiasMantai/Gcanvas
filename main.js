@@ -5,6 +5,5 @@ let pieChartOptions  = {
     numberOfElements: 4,
     colors: ["green", "#ff0000", "#0f0f0f", "red"],
     radius: 10,
-    
-
 }
+
