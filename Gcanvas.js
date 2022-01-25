@@ -73,7 +73,7 @@ class Grect {
      * @param {number} y 
      * @param {number} width 
      * @param {number} height 
-     * @param {string} mode mode of reactangle creation. "fill" = filled rectangle, "outline" = outlined rectangle, "transparent" = transparent rectangle
+     * @param {string} mode mode of ractangle creation. "fill" = filled rectangle, "outline" = outlined rectangle, "transparent" = transparent rectangle
      * @param {string} color 
      */
          drawRect(x, y, width, height, mode, color) {
