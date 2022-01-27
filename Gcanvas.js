@@ -13,6 +13,7 @@ class Gcanvas {
         console.log("%cMcanvas loaded","color:black");
     }
 
+    //init canvas
     init() {
         this.canvas = document.createElement("canvas");
         let error = 0;
@@ -29,89 +30,24 @@ class Gcanvas {
 
         //append to parent
         if(this.parent != '') document.getElementById(this.parent).appendChild(this.canvas);
+        //or to the document, if parent is empty
         else document.appendChild(this.canvas);
     }
-}
-
-class Gcircle {
-    static drawCircle(canvas, origin_x, origin_y, radius, startAngle, endAngle, direction, color, mode) {
-        let Mcontext = "";
-        Mcontext.beginPath();
-        Mcontext.strokeStyle = color;
-        Mcontext.arc(origin_x, origin_y, radius, startAngle, endAngle, direction);
-        Mcontext.stroke();
-    }
-}
-
-
-class Gline {
 
     /**
-     * 
-     * @param {*} origin_x 
-     * @param {*} origin_y 
-     * @param {*} target_x 
-     * @param {*} target_y 
+     *  
+     * @param {number} origin_x 
+     * @param {number} origin_y 
+     * @param {number} target_x 
+     * @param {number} target_y 
      * @param {string} color color of the line
      */
-         drawLine(origin_x, origin_y, target_x, target_y, lineWidth = 2, color = "black") {
-            let Mcontext = this.canvas.getContext(this.context);
-    
-            Mcontext.moveTo(origin_x, origin_y);
-            Mcontext.lineTo(target_x, target_y);
-            Mcontext.lineWidth = lineWidth;
-            Mcontext.strokeStyle = color;
-            Mcontext.stroke();
-        }
-
-}
-
-class Grect {
-
-    /**
-     * @param {number} x 
-     * @param {number} y 
-     * @param {number} width 
-     * @param {number} height 
-     * @param {string} mode mode of ractangle creation. "fill" = filled rectangle, "outline" = outlined rectangle, "transparent" = transparent rectangle
-     * @param {string} color 
-     */
-         drawRect(x, y, width, height, mode, color) {
-            let Mcontext = this.canvas.getContext(this.context);
-            switch(mode) {
-                case "fill":
-                    break;
-                case "outline":
-                    break;
-                case "transparent":
-                    break;
-            }
-        }
-}
-
-class Gimage {
-    addImage(url, x, y, width, height) {
+    drawLine(origin_x, origin_y, target_x, target_y, lineWidth = 2, color = "black") {
         let Mcontext = this.canvas.getContext(this.context);
-    }
-}
-
-
-
-//---------------------------------------------------------------------------------
-// GRAPHS
-//---------------------------------------------------------------------------------
-class pieChart {
-    draw(dataObject, )
-}
-
-class ringDiagramm {
-    constructor() {
-
-    }
-}
-
-class barChart {
-    constructor() {
-
+        Mcontext.moveTo(origin_x, origin_y);
+        Mcontext.lineTo(target_x, target_y);
+        Mcontext.lineWidth = lineWidth;
+        Mcontext.strokeStyle = color;
+        Mcontext.stroke();
     }
 }

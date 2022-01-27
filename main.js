@@ -1,11 +1,2 @@
 let canvas = new Gcanvas("canvas", 500, 500, "test", "2d", null);
-let circle = MCircle.drawCircle(canvas.id)
-
-let pieChartOptions  = {
-    id: "sampleChart",
-    numberOfElements: 4,
-    colors: ["green", "#ff0000", "#0f0f0f", "red"],
-    radius: 10,
-}
-
-let pieChart = pieChart.draw();
+canvas.drawLine(5,5,100,100,10,"blue")
