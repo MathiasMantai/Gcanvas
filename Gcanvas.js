@@ -6,16 +6,9 @@ class Gcanvas {
         this.parent = parent;
         this.context = context;
         this.contextAttributes = contextAttributes;
-
         //create the canvas
         this.init();
-
     }
-
-
-
-
-
 
     //init canvas
     init() {
@@ -39,10 +32,6 @@ class Gcanvas {
 
         if(error == 0) this.infoLog("Gcanvas successfully initialized")
     }
-
-
-
-
 
 
 
@@ -88,12 +77,36 @@ class Gcanvas {
         if(labelSet == null || labelLength == 0 || labelSet == undefined) {
             standardLabels = true;
             this.infoLog("standard labels will be used since no or empty label array was found");
-
         }
 
-        if(labelSet != null && labelLength > 0 && labelLength != dataLength) {
+        //error when label array exists and has content, but label and data dont match in length, we throw an error
+        if(labelSet != null &&labelSet != undefined && labelLength > 0 && labelLength != dataLength) {
           this.errorLog("data and label arrays do not match");
+          return;
         }
+
+        //colors
+        let standardColors = false;
+        let colorSet = object["colors"];
+        let colorLength = colorSet.length;
+
+
+        //standard colors, when color array is empty or was not found
+        if(colorSet == undefined || colorSet == null || colorLength == 0) {
+            standardColors = true;
+            this.infoLog("standard colors will be used, since no or empty color array was found");
+        }
+
+        //error handling when color array is not correct
+        
+
+        //standard data for the appearance of the pie chart
+        let tmp = ["origin_x", "origin_y", "radius"]
+        let origin_x = object["origin_x"];
+        if(origin_x == undefined) origin_x = this.width / 2;
+        let origin_y = object["origin_y"];
+        if(origin_y == undefined) origin_y = this.height / 2;
+        console.log(origin_x);
         
         
         let total = 0;
@@ -119,8 +132,7 @@ class Gcanvas {
 
     }
     
-    drawRingChart(origin_x, origin_y, radiusRing, radiusMax, dataArray) {
-
+    drawRingChart(dataArray) {
 
         //set new satrtingPoint to endPoint
         startingPoint = endPoint;
