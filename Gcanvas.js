@@ -10,8 +10,22 @@ class Gcanvas {
         //create the canvas
         this.init();
 
-        console.log("%cMcanvas loaded","color:black");
+        console.log("%cGcanvas loaded","color:black");
     }
+
+
+    /**
+     * Calculation Functions
+     */
+     static calcPercentOfWhole(total, part) {
+        return (part * 100) / total;
+    }
+
+    static newEndPoint(percent, startingPoint) {
+        return startingPoint + (2 / 100 * percent);
+    }
+
+
 
     //init canvas
     init() {
@@ -34,6 +48,12 @@ class Gcanvas {
         else document.appendChild(this.canvas);
     }
 
+
+
+
+
+
+
     /**
      *  
      * @param {number} origin_x 
@@ -43,11 +63,84 @@ class Gcanvas {
      * @param {string} color color of the line
      */
     drawLine(origin_x, origin_y, target_x, target_y, lineWidth = 2, color = "black") {
-        let Mcontext = this.canvas.getContext(this.context);
-        Mcontext.moveTo(origin_x, origin_y);
-        Mcontext.lineTo(target_x, target_y);
-        Mcontext.lineWidth = lineWidth;
-        Mcontext.strokeStyle = color;
-        Mcontext.stroke();
+        let Gcontext = this.canvas.getContext(this.context);
+        Gcontext.moveTo(origin_x, origin_y);
+        Gcontext.lineTo(target_x, target_y);
+        Gcontext.lineWidth = lineWidth;
+        Gcontext.strokeStyle = color;
+        Gcontext.stroke();
     }
+
+    static errorLog() {
+        
+    }
+
+    /**
+     * Draws a pie chart with the given data object
+     * @param {object} dataArray object that contains all data for the chart
+     * structure;
+     * - "labels" (array): labels of the pie slices
+     * - "data" (array): specific data of each slice
+     * - "colors" (array): color of each pie slice
+     */
+    drawPieChart(object) {
+        let GContext = this.canvas.getContext(this.context);
+
+        let dataSet = object["data"];
+        let dataLength = dataSet.length;
+        console.log(dataSet);
+
+        let standardLabels = false;
+        let labelSet = object["labels"];
+        let labelLength = labelSet.length;
+
+        //if no labels are specified, we use standard labels in the form of label1, ..., labeln
+        if(labelSet == null || labelLength == 0 || labelSet == undefined) {
+            standardLabels = true;
+        }
+
+        if(labelSet != null && labelLength > 0 && labelLength != dataLength) {
+            console.log("ERROR: data and label arrays do not match")
+        }
+        console.log(standardLabels);
+        
+        let total = 0;
+        for(let i = 0; i < dataLength; i++) {
+            total+= dataSet[i];
+        }
+        let startingPoint = 0;
+        for(let i = 0; i < dataLength; i++) {
+            let percent = calcPercentOfWhole(total, dataSet[i]);
+            let endPoint = newEndPoint(percent, startingPoint);
+
+            //draw Pie slice
+
+            //set new satrtingPoint to endPoint
+            startingPoint = endPoint;
+
+        }
+    }
+    
+    
+    static drawPieSlice() {
+
+    }
+    
+    drawRingChart(origin_x, origin_y, radiusRing, radiusMax, dataArray) {
+
+
+        //set new satrtingPoint to endPoint
+        startingPoint = endPoint;
+
+        //draw transparent circle to create ring
+        let radiusTrans = radiusMax - radiusRing;
+    }
+
+ 
+
+
+
+
+
+
 }
