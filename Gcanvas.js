@@ -10,20 +10,10 @@ class Gcanvas {
         //create the canvas
         this.init();
 
-        console.log("%cGcanvas loaded","color:black");
     }
 
 
-    /**
-     * Calculation Functions
-     */
-     static calcPercentOfWhole(total, part) {
-        return (part * 100) / total;
-    }
 
-    static newEndPoint(percent, startingPoint) {
-        return startingPoint + (2 / 100 * percent);
-    }
 
 
 
@@ -35,7 +25,7 @@ class Gcanvas {
         //define context
         if(this.context != "2d" && this.context != "webgl" && this.context != "webgl2" && this.context != "webgl-experimental") error++;
         else this.canvas.getContext(this.context, this.contextAttributes);
-        if(error == 1) console.log("Error: Wrong Canvas context");
+        if(error == 1) this.errorLog("correct context was not found")
 
         //attributes of the canvas
         this.canvas.setAttribute("id", this.id);
@@ -46,6 +36,8 @@ class Gcanvas {
         if(this.parent != '') document.getElementById(this.parent).appendChild(this.canvas);
         //or to the document, if parent is empty
         else document.appendChild(this.canvas);
+
+        if(error == 0) this.infoLog("Gcanvas successfully initialized")
     }
 
 
@@ -71,9 +63,7 @@ class Gcanvas {
         Gcontext.stroke();
     }
 
-    static errorLog() {
-        
-    }
+
 
     /**
      * Draws a pie chart with the given data object
@@ -97,12 +87,14 @@ class Gcanvas {
         //if no labels are specified, we use standard labels in the form of label1, ..., labeln
         if(labelSet == null || labelLength == 0 || labelSet == undefined) {
             standardLabels = true;
+            this.infoLog("standard labels will be used since no or empty label array was found");
+
         }
 
         if(labelSet != null && labelLength > 0 && labelLength != dataLength) {
-            console.log("ERROR: data and label arrays do not match")
+          this.errorLog("data and label arrays do not match");
         }
-        console.log(standardLabels);
+        
         
         let total = 0;
         for(let i = 0; i < dataLength; i++) {
@@ -110,8 +102,9 @@ class Gcanvas {
         }
         let startingPoint = 0;
         for(let i = 0; i < dataLength; i++) {
-            let percent = calcPercentOfWhole(total, dataSet[i]);
-            let endPoint = newEndPoint(percent, startingPoint);
+            let percent = this.calcPercentOfWhole(total, dataSet[i]);
+            let endPoint = this.newEndPoint(percent, startingPoint);
+            console.log(percent + " " + endPoint);
 
             //draw Pie slice
 
@@ -136,11 +129,27 @@ class Gcanvas {
         let radiusTrans = radiusMax - radiusRing;
     }
 
- 
 
+     /**
+     * Calculation Functions
+     */
+    calcPercentOfWhole(total, part) {
+        return (part * 100) / total;
+    }
+    
+    newEndPoint(percent, startingPoint) {
+        return startingPoint + (2 / 100 * percent);
+    }
 
+    /**
+     * Logs
+     */
+    errorLog(errorMessage) {
+        console.error("%c"+ "Error: " +errorMessage, "color: red");
+    }
 
-
-
-
+    infoLog(infoMessage) {
+        console.log(infoMessage);
+    }
+     
 }

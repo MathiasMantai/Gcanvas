@@ -8,6 +8,7 @@ let pieChart = {
     labels: [
         "Hans",
         "Bob",
+        "s"
     ],
     data: [
         30,
