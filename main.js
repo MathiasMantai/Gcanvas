@@ -4,21 +4,24 @@ let canvas = new Gcanvas("canvas", 500, 500, "test", "2d", null);
 let pieChart = {
     origin_x: 250,
     origin_y: 250,
-    radius: 15,
+    radius: 100,
     labels: [
         "Hans",
         "Bob",
-        "s"
+        "Dietrich"
+
     ],
     data: [
         30,
         50,
         20
+    
     ],
     colors: [
         "#ff0000",
         "#f2f3f4",
-        "red"
+        "blue"
+
     ]
 }
 

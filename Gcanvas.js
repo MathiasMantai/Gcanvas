@@ -63,7 +63,7 @@ class Gcanvas {
      * - "colors" (array): color of each pie slice
      */
     drawPieChart(object) {
-        let GContext = this.canvas.getContext(this.context);
+        let Gcontext = this.canvas.getContext(this.context);
         let error = 0;
 
         let dataSet = object["data"];
@@ -119,9 +119,8 @@ class Gcanvas {
             radius: (object["radius"] == undefined) ? (10) : object["radius"]
         };
 
-        console.log(pieNumbers.radius);
-        
-        
+
+
         let total = 0;
         for(let i = 0; i < dataLength; i++) {
             total+= dataSet[i];
@@ -130,12 +129,19 @@ class Gcanvas {
         for(let i = 0; i < dataLength; i++) {
             let percent = this.calcPercentOfWhole(total, dataSet[i]);
             let endPoint = this.newEndPoint(percent, startingPoint);
-            console.log(percent + " " + endPoint);
+            
 
             //draw Pie slice
+            Gcontext.beginPath();
+            Gcontext.fillStyle = colorSet[i];
+            Gcontext.moveTo(pieNumbers.origin_x, pieNumbers.origin_y);
+            Gcontext.arc(pieNumbers.origin_x, pieNumbers.origin_y, pieNumbers.radius, startingPoint*Math.PI, endPoint*Math.PI);
+            Gcontext.fill();
 
             //set new satrtingPoint to endPoint
             startingPoint = endPoint;
+            // fix the blur
+            // https://medium.com/wdstack/fixing-html5-2d-canvas-blur-8ebe27db07da
 
         }
     }
