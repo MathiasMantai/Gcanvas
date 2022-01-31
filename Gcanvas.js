@@ -76,11 +76,11 @@ class Gcanvas {
         //if no labels are specified, we use standard labels in the form of label1, ..., labeln
         if(labelSet == null || labelLength == 0 || labelSet == undefined) {
             standardLabels = true;
-            this.infoLog("standard labels will be used since no or empty label array was found");
+            this.infoLog("standard labels will be used, since no or empty label array was found");
         }
 
         //error when label array exists and has content, but label and data dont match in length, we throw an error
-        if(labelSet != null &&labelSet != undefined && labelLength > 0 && labelLength != dataLength) {
+        if(labelSet != null && labelSet != undefined && labelLength > 0 && labelLength != dataLength) {
           this.errorLog("data and label arrays do not match");
           return;
         }
@@ -98,15 +98,19 @@ class Gcanvas {
         }
 
         //error handling when color array is not correct
-        
+        if(colorSet != null && colorSet != undefined && colorLength > 0 && colorLength != dataLength || colorLength) {
+            this.errorLog("color and data arrays do not match");
+            return;
+        }
 
         //standard data for the appearance of the pie chart
-        let tmp = ["origin_x", "origin_y", "radius"]
-        let origin_x = object["origin_x"];
-        if(origin_x == undefined) origin_x = this.width / 2;
-        let origin_y = object["origin_y"];
-        if(origin_y == undefined) origin_y = this.height / 2;
-        console.log(origin_x);
+        let pieNumbers = {
+            origin_x: (object["origin_x"] == undefined) ? (this.width / 2) : object["origin_x"],
+            origin_y: (object["origin_y"] == undefined) ? (this.height / 2) : object["origin_y"],
+            radius: (object["radius"] == undefined) ? (10) : object["radius"]
+        };
+
+        console.log(pieNumbers.radius);
         
         
         let total = 0;
