@@ -16,7 +16,9 @@ let pieChart = {
         20
     ],
     colors: [
-
+        "#ff0000",
+        "#f2f3f4",
+        "red"
     ]
 }
 

@@ -30,7 +30,7 @@ class Gcanvas {
         //or to the document, if parent is empty
         else document.appendChild(this.canvas);
 
-        if(error == 0) this.infoLog("Gcanvas successfully initialized")
+        if(error == 0) this.infoLog("Gcanvas successfully initialized");
     }
 
 
@@ -64,10 +64,10 @@ class Gcanvas {
      */
     drawPieChart(object) {
         let GContext = this.canvas.getContext(this.context);
+        let error = 0;
 
         let dataSet = object["data"];
         let dataLength = dataSet.length;
-        console.log(dataSet);
 
         let standardLabels = false;
         let labelSet = object["labels"];
@@ -91,6 +91,15 @@ class Gcanvas {
         let colorLength = colorSet.length;
 
 
+        //check if all given colors are valid
+        for(var color in colorSet) {
+            if(!this.isValidColor(color)) {
+                error++;
+            }
+        };
+        if(error > 0) this.errorLog("non valid color has been given in color array");
+
+
         //standard colors, when color array is empty or was not found
         if(colorSet == undefined || colorSet == null || colorLength == 0) {
             standardColors = true;
@@ -98,7 +107,7 @@ class Gcanvas {
         }
 
         //error handling when color array is not correct
-        if(colorSet != null && colorSet != undefined && colorLength > 0 && colorLength != dataLength || colorLength) {
+        if(colorSet != null && colorSet != undefined && colorLength > 0 && colorLength != dataLength) {
             this.errorLog("color and data arrays do not match");
             return;
         }
@@ -132,7 +141,7 @@ class Gcanvas {
     }
     
     
-    static drawPieSlice() {
+    drawPieSlice() {
 
     }
     
@@ -146,8 +155,8 @@ class Gcanvas {
     }
 
 
-     /**
-     * Calculation Functions
+    /**
+     * HelperFunctions
      */
     calcPercentOfWhole(total, part) {
         return (part * 100) / total;
@@ -157,11 +166,17 @@ class Gcanvas {
         return startingPoint + (2 / 100 * percent);
     }
 
+    isValidColor(colorToCheck) {
+        let s = new Option().style;
+        s.color = colorToCheck;
+        return s.color !== '';
+    }
+
     /**
      * Logs
      */
     errorLog(errorMessage) {
-        console.error("%c"+ "Error: " +errorMessage, "color: red");
+        console.error("%c"+ "ERROR: " +errorMessage, "color: red");
     }
 
     infoLog(infoMessage) {
