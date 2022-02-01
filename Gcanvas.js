@@ -19,7 +19,10 @@ class Gcanvas {
         //define context
         if(this.context != "2d" && this.context != "webgl" && this.context != "webgl2" && this.context != "webgl-experimental") error++;
         else this.canvas.getContext(this.context, this.contextAttributes);
-        if(error == 1) this.errorLog("correct context was not found")
+        if(error == 1) {
+            this.errorLog("correct context was not found");
+            return;
+        }
 
         //attributes of the canvas
         this.canvas.setAttribute("id", this.id);
@@ -42,7 +45,6 @@ class Gcanvas {
 
         if(error == 0) this.infoLog("Gcanvas successfully initialized");
     }
-
 
     /**
      *  
@@ -148,15 +150,7 @@ class Gcanvas {
 
             //set new satrtingPoint to endPoint
             startingPoint = endPoint;
-            // fix the blur
-            // https://medium.com/wdstack/fixing-html5-2d-canvas-blur-8ebe27db07da
-
         }
-    }
-    
-    
-    drawPieSlice() {
-
     }
     
     drawRingChart(object) {
@@ -213,8 +207,8 @@ class Gcanvas {
         let pieNumbers = {
             origin_x: (object["origin_x"] == undefined) ? (this.width / 2) : object["origin_x"],
             origin_y: (object["origin_y"] == undefined) ? (this.height / 2) : object["origin_y"],
-            radius_max: (object["radius_max"] == undefined) ? (10) : object["radius_max"],
-            radius_circle: (object["radius_circle"] == undefined) ? (5) : object["radius_circle"]
+            radius_max: (object["radius_max"] == undefined) ? ((this.width+this.height)*2) : object["radius_max"],
+            radius_circle: (object["radius_circle"] == undefined) ? 20 : object["radius_circle"]
         };
 
 
@@ -250,12 +244,35 @@ class Gcanvas {
             Gcontext.arc(pieNumbers.origin_x, pieNumbers.origin_y, radiusTrans, 0, 2*Math.PI);
             Gcontext.fill();
         }
+    }
+
+    drawQuadraticCurve() {
+        var points = [{x:1,y:1},{x:2,y:3},{x:3,y:4},{x:4,y:2},{x:5,y:6}] //took 5 example points
+        let Gcontext = this.canvas.getContext(this.context);
+        Gcontext.moveTo((points[0].x), points[0].y);
+        for(var i = 0; i < points.length-1; i ++) {
+            var x_mid = (points[i].x + points[i+1].x) / 2;
+            var y_mid = (points[i].y + points[i+1].y) / 2;
+            var cp_x1 = (x_mid + points[i].x) / 2;
+            var cp_x2 = (x_mid + points[i+1].x) / 2;
+            Gcontext.quadraticCurveTo(cp_x1,points[i].y ,x_mid, y_mid);
+            Gcontext.quadraticCurveTo(cp_x2,points[i+1].y ,points[i+1].x,points[i+1].y);
+        }
+    }
+
+    svgToImage() {
 
     }
 
+    imageToCanvas() {
+        
+    }
+
+    //svg -> image -> canvas 
+    //https://levelup.gitconnected.com/draw-an-svg-to-canvas-and-download-it-as-image-in-javascript-f7f7713cf81f
 
     /**
-     * HelperFunctions
+     * Helper Functions
      */
     calcPercentOfWhole(total, part) {
         return (part * 100) / total;
@@ -271,6 +288,11 @@ class Gcanvas {
         return s.color !== '';
     }
 
+    drawPieSlice() {
+        //todo
+        //helper function for drawPieChart and drawRingChart
+    }
+
     /**
      * Logs
      */
@@ -282,3 +304,7 @@ class Gcanvas {
         console.log(infoMessage);
     }
 }
+
+
+//
+console.log("Gcanvas Version 0.0.1");    

@@ -5,25 +5,23 @@ let pieChart = {
     origin_x: 250,
     origin_y: 250,
     radius_max: 80,
-    radius_circle: 15,
+    radius_circle: 30,
     labels: [
         "Hans",
         "Bob",
         "Dietrich"
-
     ],
     data: [
         30,
         50,
         20
-    
     ],
     colors: [
         "#3488D8",
         "#825DA4",
         "#A99E6D"
-
     ]
 }
 
-canvas.drawRingChart(pieChart);
+//canvas.drawRingChart(pieChart);
+canvas.drawQuadraticCurve();
