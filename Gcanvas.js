@@ -62,7 +62,6 @@ class Gcanvas {
     }
 
 
-
     /**
      * Draws a pie chart with the given data object
      * @param {object} dataArray object that contains all data for the chart
@@ -190,7 +189,7 @@ class Gcanvas {
 
 
         //check if all given colors are valid
-        for(var color in colorSet) {
+        for(let color in colorSet) {
             if(!this.isValidColor(color)) {
                 error++;
             }
