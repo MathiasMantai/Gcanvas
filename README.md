@@ -5,6 +5,6 @@
 - draw simple lines, circles and rectangles
 - draw pie charts and ring charts
 
-##TODO
+## TODO
 - add chart legend when creating chart
 - show data for each chart
