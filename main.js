@@ -1,10 +1,11 @@
-let canvas = new Gcanvas("canvas", 500, 500, "test", "2d", null);
+let canvas = new Gcanvas("canvas", 500, 500, "white", "test", "2d", null);
 //canvas.drawLine(5,5,100,100,10,"blue");
 
 let pieChart = {
     origin_x: 250,
     origin_y: 250,
-    radius: 100,
+    radius_max: 80,
+    radius_circle: 15,
     labels: [
         "Hans",
         "Bob",
@@ -18,11 +19,11 @@ let pieChart = {
     
     ],
     colors: [
-        "#ff0000",
-        "#f2f3f4",
-        "blue"
+        "#3488D8",
+        "#825DA4",
+        "#A99E6D"
 
     ]
 }
 
-canvas.drawPieChart(pieChart);
+canvas.drawRingChart(pieChart);
