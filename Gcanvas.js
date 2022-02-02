@@ -129,7 +129,11 @@ class Gcanvas {
             radius: (object["radius"] == undefined) ? (10) : object["radius"]
         };
 
-
+        //add space if declared in object
+        let space = 0;
+        if(object["space"] != undefined && object["space"] != null && object["space"] == "yes") {
+            space = 0.01;
+        }
 
         let total = 0;
         for(let i = 0; i < dataLength; i++) {
@@ -144,7 +148,7 @@ class Gcanvas {
             Gcontext.beginPath();
             Gcontext.fillStyle = colorSet[i];
             Gcontext.moveTo(pieNumbers.origin_x, pieNumbers.origin_y);
-            Gcontext.arc(pieNumbers.origin_x, pieNumbers.origin_y, pieNumbers.radius, startingPoint*Math.PI, endPoint*Math.PI);
+            Gcontext.arc(pieNumbers.origin_x, pieNumbers.origin_y, pieNumbers.radius, (startingPoint+space)*Math.PI, endPoint*Math.PI);
             Gcontext.fill();
 
             //set new satrtingPoint to endPoint
@@ -210,7 +214,11 @@ class Gcanvas {
             radius_circle: (object["radius_circle"] == undefined) ? 20 : object["radius_circle"]
         };
 
-
+        //add space if declared in object
+        let space = 0;
+        if(object["space"] != undefined && object["space"] != null && object["space"] == "yes") {
+            space = 0.01;
+        }
 
         let total = 0;
         for(let i = 0; i < dataLength; i++) {
@@ -221,12 +229,11 @@ class Gcanvas {
             let percent = this.calcPercentOfWhole(total, dataSet[i]);
             let endPoint = this.newEndPoint(percent, startingPoint);
             
-
             //draw Pie slice
             Gcontext.beginPath();
             Gcontext.fillStyle = colorSet[i];
             Gcontext.moveTo(pieNumbers.origin_x, pieNumbers.origin_y);
-            Gcontext.arc(pieNumbers.origin_x, pieNumbers.origin_y, pieNumbers.radius_max, startingPoint*Math.PI, endPoint*Math.PI);
+            Gcontext.arc(pieNumbers.origin_x, pieNumbers.origin_y, pieNumbers.radius_max, (startingPoint+space)*Math.PI, endPoint*Math.PI);
             Gcontext.fill();
 
             //set new satrtingPoint to endPoint
@@ -272,7 +279,7 @@ class Gcanvas {
         
     }
 
-    addLegendToChart(chartType, labelsArray, standardLabels, textArray) {
+    addLegendToChart(chartType, labelsArray, standardLabels, textArray, dataLength) {
         let Gcontext = this.canvas.getContext(this.context);
         
         //draw legend with standard labels if true
@@ -322,7 +329,7 @@ class Gcanvas {
     infoLog(infoMessage) {
         console.log(infoMessage);
     }
-}
+};
 
 
 //
