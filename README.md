@@ -14,3 +14,4 @@
 - show data for each chart
 - add support for quadratic and
 - add color to label
+- add support for addittional css styles
