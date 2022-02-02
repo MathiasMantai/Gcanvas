@@ -8,3 +8,4 @@
 ## TODO
 - add chart legend when creating chart
 - show data for each chart
+- add support for quadratic and
