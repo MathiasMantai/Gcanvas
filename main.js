@@ -6,6 +6,10 @@ let pieChart = {
     origin_y: 250,
     radius_max: 80,
     radius_circle: 30,
+    legend: {
+        font: "Arial",
+        fontSize: "30px",
+    },
     labels: [
         "Hans",
         "Bob",
@@ -23,5 +27,5 @@ let pieChart = {
     ]
 }
 
-//canvas.drawRingChart(pieChart);
-canvas.drawQuadraticCurve();
+canvas.drawRingChart(pieChart);
+//canvas.drawQuadraticCurve();

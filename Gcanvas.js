@@ -140,7 +140,6 @@ class Gcanvas {
             let percent = this.calcPercentOfWhole(total, dataSet[i]);
             let endPoint = this.newEndPoint(percent, startingPoint);
             
-
             //draw Pie slice
             Gcontext.beginPath();
             Gcontext.fillStyle = colorSet[i];
@@ -244,6 +243,11 @@ class Gcanvas {
             Gcontext.arc(pieNumbers.origin_x, pieNumbers.origin_y, radiusTrans, 0, 2*Math.PI);
             Gcontext.fill();
         }
+
+        //create legend, if legendarray exists
+        if(object["legend"] != null && object["legend"] != undefined && object["legend"].length > 0) {
+            this.addLegendToChart("ring", labelSet, standardLabels, object["legend"]);
+        }
     }
 
     drawQuadraticCurve() {
@@ -266,6 +270,21 @@ class Gcanvas {
 
     imageToCanvas() {
         
+    }
+
+    addLegendToChart(chartType, labelsArray, standardLabels, textArray) {
+        let Gcontext = this.canvas.getContext(this.context);
+        
+        //draw legend with standard labels if true
+        if(standardLabels == true) {
+
+        }
+        //draw given labels if false
+        else if(standardLabels == false) {
+            
+
+        }
+
     }
 
     //svg -> image -> canvas 
