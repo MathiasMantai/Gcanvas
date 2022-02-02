@@ -250,10 +250,11 @@ class Gcanvas {
             Gcontext.arc(pieNumbers.origin_x, pieNumbers.origin_y, radiusTrans, 0, 2*Math.PI);
             Gcontext.fill();
         }
-
+         
         //create legend, if legendarray exists
-        if(object["legend"] != null && object["legend"] != undefined && object["legend"].length > 0) {
-            this.addLegendToChart("ring", labelSet, standardLabels, object["legend"]);
+        if(object["legend"] != null && object["legend"] != undefined && this.objectLength(object["legend"])> 0) {
+            this.addLegendToChart("ring", labelSet, standardLabels, colorSet, standardColors, object["legend"], dataLength);
+            this.infoLog("legend added");
         }
     }
 
@@ -278,18 +279,52 @@ class Gcanvas {
     imageToCanvas() {
         
     }
-
-    addLegendToChart(chartType, labelsArray, standardLabels, textArray, dataLength) {
+  
+    addLegendToChart(chartType, labelsArray, standardLabels, colorArray, standardColors, legendObject, dataLength) {
         let Gcontext = this.canvas.getContext(this.context);
-        
-        //draw legend with standard labels if true
-        if(standardLabels == true) {
+        let object = legendObject;
 
+        //error handling for legend object
+        if(legendObject["origin_x"] == '' || legendObject["origin_x"] == null || legendObject["origin_x"] == undefined || legendObject["origin_y"] == '' || legendObject["origin_y"] == null || legendObject["origin_y"] == undefined) {
+            this.errorLog("coordinates for legend not defined or false");
+            return;
         }
-        //draw given labels if false
-        else if(standardLabels == false) {
-            
 
+        //arrays for labels and colors
+        let labels = [];
+        let colors = [];
+
+        
+        //handle labels
+        if(standardLabels == false) labels = labelsArray;
+        else if(standardLabels == true) {
+            for(let i = 1; i <= dataLength; i++) {
+                labels.push("Label"+i);
+            }
+        }
+
+        //handle colors
+        if(standardColors == false) colors = colorArray;
+        else if(standardColors == true) {
+            for(let i = 1; i <= dataLength; i++) {
+                colors.push("#000");
+            }
+        }
+
+        //draw legend
+        for(let i = 0; i < dataLength; i++) {
+            Gcontext.font = object["fontSize"] + " " + object["font"];
+            //draw a rectangle representing the color of the dataset
+            Gcontext.fillStyle = colors[i];
+            Gcontext.fillRect(object["origin_x"]-(parseInt(object["fontSize"].replace("px", ""))/2), object["origin_y"]-(parseInt(object["fontSize"].replace("px", ""))/2), parseInt(object["fontSize"].replace("px", ""))/2.5, parseInt(object["fontSize"].replace("px", ""))/2.5);
+
+
+
+            //draw the text
+            Gcontext.fillStyle = object["textColor"];
+            Gcontext.fillText(labels[i],object["origin_x"],object["origin_y"]);
+            //change coordinates for next label
+            object["origin_y"]+= parseInt(object["fontSize"].replace("px", ""));
         }
 
     }
@@ -317,6 +352,10 @@ class Gcanvas {
     drawPieSlice() {
         //todo
         //helper function for drawPieChart and drawRingChart
+    }
+
+    objectLength(object) {
+        return Object.keys(object).length;
     }
 
     /**

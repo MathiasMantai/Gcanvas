@@ -1,15 +1,18 @@
-let canvas = new Gcanvas("canvas", 500, 500, "white", "test", "2d", null);
+let canvas = new Gcanvas("canvas", 300, 200, "white", "test", "2d", null);
 //canvas.drawLine(5,5,100,100,10,"blue");
 
-let pieChart = {
+let ringChart = {
     space: "yes",
-    origin_x: 250,
-    origin_y: 250,
+    origin_x: 100,
+    origin_y: 100,
     radius_max: 80,
     radius_circle: 30,
     legend: {
         font: "Arial",
-        fontSize: "30px",
+        fontSize: "18px",
+        textColor: "black",
+        origin_x: 190,
+        origin_y: 150
     },
     labels: [
         "Hans",
@@ -28,5 +31,4 @@ let pieChart = {
     ]
 }
 
-canvas.drawRingChart(pieChart);
-//canvas.drawQuadraticCurve();
+canvas.drawRingChart(ringChart);
