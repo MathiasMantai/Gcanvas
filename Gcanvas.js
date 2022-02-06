@@ -244,11 +244,14 @@ class Gcanvas {
 
         let radiusTrans = pieNumbers.radius_max - pieNumbers.radius_circle;
         if(radiusTrans > 0 && radiusTrans < pieNumbers.radius_max) {
+           
             Gcontext.beginPath();
             Gcontext.fillStyle = this.backGroundColor;
+            Gcontext.globalAlpha = 1;
             Gcontext.moveTo(pieNumbers.origin_x, pieNumbers.origin_y);
             Gcontext.arc(pieNumbers.origin_x, pieNumbers.origin_y, radiusTrans, 0, 2*Math.PI);
             Gcontext.fill();
+           
         }
          
         //create legend, if legendarray exists
@@ -327,6 +330,11 @@ class Gcanvas {
             object["origin_y"]+= parseInt(object["fontSize"].replace("px", ""));
         }
 
+        //add mouseover event
+        this.canvas.addEventListener('mouseover', function(e) {
+            console.log(this.getMouseCoordinates(e));
+        });
+
     }
 
     //svg -> image -> canvas 
@@ -358,6 +366,31 @@ class Gcanvas {
         return Object.keys(object).length;
     }
 
+    isInsideCircle(origin_x, origin_y, mouse_x, mouse_y, radius) {
+        let isInCircle_x = (Math.abs(mouse_x - origin_x)) < radius;
+        let isInCircle_Y = (Math.abs(mouse_y - origin_y)) < radius;
+        return (isInCircle_Y && isInCircle_x);
+    }
+
+    isInsideRing(origin_x, origin_y, mouse_x, mouse_y, radius_circle, radius_max) {
+        let isInCircleMax = this.isInsideCircle(origin_x, origin_y, mouse_x, mouse_y, radius_max);
+        let isInCirceMin = this.isInsideCircle(origin_x, origin_y, mouse_x, mouse_y, (radius_max-radius_circle));
+        return (isInCircleMax && !isInCirceMin);
+    }
+
+    getMouseCoordinates(e) {
+        let rect = this.canvas.getBoundingClientRect();
+        scaleX = this.canvas.width / rect.width;
+        scaleY = this.canvas.height / rect.height;
+
+        return {
+            x: (e.clientX - rect.left) * scaleX,
+            y: (e.clientY - rect.top) * scaleY
+        }
+    }
+
+
+
     /**
      * Logs
      */
@@ -372,4 +405,4 @@ class Gcanvas {
 
 
 //
-console.log("Gcanvas Version 0.0.1");    
+console.log("Gcanvas Version 0.0.2");    

@@ -1,4 +1,4 @@
-let canvas = new Gcanvas("canvas", 300, 200, "white", "test", "2d", null);
+let canvas = new Gcanvas("canvas", 300, 200, "#fff", "test", "2d", null);
 //canvas.drawLine(5,5,100,100,10,"blue");
 
 let ringChart = {
@@ -25,9 +25,9 @@ let ringChart = {
         20
     ],
     colors: [
-        "#3488D8",
-        "#825DA4",
-        "#A99E6D"
+        "#0080FF",
+        "#B649FF",
+        "#47C168"
     ]
 }
 
