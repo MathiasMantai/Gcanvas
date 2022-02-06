@@ -32,7 +32,10 @@ class Gcanvas {
         if(this.backGroundColor != '' && this.backGroundColor != undefined && this.backGroundColor != null) {
             this.canvas.style.backgroundColor = this.backGroundColor;
         }
-        else this.canvas.style.backGroundColor = '#fff';
+        else {
+            this.canvas.style.backGroundColor = '#fff';
+            this.backGroundColor = '#fff';
+        }
 
         //append to parent
         if(this.parent != '') document.getElementById(this.parent).appendChild(this.canvas);
