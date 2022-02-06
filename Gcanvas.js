@@ -7,6 +7,7 @@ class Gcanvas {
         this.parent = parent;
         this.context = context;
         this.contextAttributes = contextAttributes;
+        this.canvas;
         //create the canvas
         this.init();
     }
@@ -259,7 +260,7 @@ class Gcanvas {
          
         //create legend, if legendarray exists
         if(object["legend"] != null && object["legend"] != undefined && this.objectLength(object["legend"])> 0) {
-            this.addLegendToChart("ring", labelSet, standardLabels, colorSet, standardColors, object["legend"], dataLength);
+            this.addLegendToChart("ring", labelSet, standardLabels, colorSet, standardColors, object["legend"], dataLength, pieNumbers);
             this.infoLog("legend added");
         }
     }
@@ -286,7 +287,7 @@ class Gcanvas {
         
     }
   
-    addLegendToChart(chartType, labelsArray, standardLabels, colorArray, standardColors, legendObject, dataLength) {
+    addLegendToChart(chartType, labelsArray, standardLabels, colorArray, standardColors, legendObject, dataLength, pieNumbers) {
         let Gcontext = this.canvas.getContext(this.context);
         let object = legendObject;
 
@@ -333,9 +334,21 @@ class Gcanvas {
             object["origin_y"]+= parseInt(object["fontSize"].replace("px", ""));
         }
 
+
         //add mouseover event
-        this.canvas.addEventListener('mouseover', function(e) {
-            console.log(this.getMouseCoordinates(e));
+        this.canvas.addEventListener('mousemove', (e) => {
+
+            let rect = this.canvas.getBoundingClientRect();
+            let scaleX = this.canvas.width / rect.width;
+            let scaleY = this.canvas.height / rect.height;
+    
+            let mouse = {
+                x: (e.clientX - rect.left) * scaleX,
+                y: (e.clientY - rect.top) * scaleY
+            }
+
+           console.log(this.isInsideCircle(pieNumbers.origin_x,pieNumbers.origin_y,mouse.x,mouse.y,pieNumbers.radius_max));
+    
         });
 
     }
@@ -370,29 +383,16 @@ class Gcanvas {
     }
 
     isInsideCircle(origin_x, origin_y, mouse_x, mouse_y, radius) {
-        let isInCircle_x = (Math.abs(mouse_x - origin_x)) < radius;
-        let isInCircle_Y = (Math.abs(mouse_y - origin_y)) < radius;
+        let isInCircle_x = (Math.abs(mouse_x - origin_x)) <= radius;
+        let isInCircle_Y = (Math.abs(mouse_y - origin_y)) <= radius;
         return (isInCircle_Y && isInCircle_x);
     }
 
     isInsideRing(origin_x, origin_y, mouse_x, mouse_y, radius_circle, radius_max) {
         let isInCircleMax = this.isInsideCircle(origin_x, origin_y, mouse_x, mouse_y, radius_max);
         let isInCirceMin = this.isInsideCircle(origin_x, origin_y, mouse_x, mouse_y, (radius_max-radius_circle));
-        return (isInCircleMax && !isInCirceMin);
+        return (isInCircleMax);
     }
-
-    getMouseCoordinates(e) {
-        let rect = this.canvas.getBoundingClientRect();
-        scaleX = this.canvas.width / rect.width;
-        scaleY = this.canvas.height / rect.height;
-
-        return {
-            x: (e.clientX - rect.left) * scaleX,
-            y: (e.clientY - rect.top) * scaleY
-        }
-    }
-
-
 
     /**
      * Logs
