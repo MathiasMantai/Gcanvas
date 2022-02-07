@@ -347,7 +347,7 @@ class Gcanvas {
                 y: (e.clientY - rect.top) * scaleY
             }
 
-           console.log(this.isInsideCircle(pieNumbers.origin_x,pieNumbers.origin_y,mouse.x,mouse.y,pieNumbers.radius_max));
+           console.log(this.isInsideRing(pieNumbers.origin_x,pieNumbers.origin_y,mouse.x,mouse.y, pieNumbers.radius_circle, pieNumbers.radius_max));
     
         });
 
@@ -383,15 +383,17 @@ class Gcanvas {
     }
 
     isInsideCircle(origin_x, origin_y, mouse_x, mouse_y, radius) {
-        let isInCircle_x = (Math.abs(mouse_x - origin_x)) <= radius;
-        let isInCircle_Y = (Math.abs(mouse_y - origin_y)) <= radius;
-        return (isInCircle_Y && isInCircle_x);
+        
+        let a = Math.abs(origin_x - mouse_x);
+        let b = Math.abs(origin_y - mouse_y);
+        let c = Math.sqrt(a*a + b*b);
+        return (c <= radius);
     }
 
     isInsideRing(origin_x, origin_y, mouse_x, mouse_y, radius_circle, radius_max) {
         let isInCircleMax = this.isInsideCircle(origin_x, origin_y, mouse_x, mouse_y, radius_max);
         let isInCirceMin = this.isInsideCircle(origin_x, origin_y, mouse_x, mouse_y, (radius_max-radius_circle));
-        return (isInCircleMax);
+        return (isInCircleMax && !isInCirceMin);
     }
 
     /**
