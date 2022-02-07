@@ -347,7 +347,25 @@ class Gcanvas {
                 y: (e.clientY - rect.top) * scaleY
             }
 
-           console.log(this.isInsideRing(pieNumbers.origin_x,pieNumbers.origin_y,mouse.x,mouse.y, pieNumbers.radius_circle, pieNumbers.radius_max));
+           //if inside ring, determine what data the mouse is hovering over
+           if(this.isInsideRing(pieNumbers.origin_x,pieNumbers.origin_y,mouse.x,mouse.y, pieNumbers.radius_circle, pieNumbers.radius_max)) {
+               //determine the angle between starting point line and line that connects the mouse position with the diagramm origin
+
+               //vector for originLine
+               let originLine = {
+                   x: 5,
+                   y: 20
+               };
+
+               //vector for line connecting origin point and mouse coordinates
+               let mouseLine = {
+                   x: 10,
+                   y: 20
+               };
+
+
+           }
+
     
         });
 
