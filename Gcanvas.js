@@ -372,16 +372,27 @@ class Gcanvas {
                //transfer angle into percent
                let anglePercent = (100*mouseAngle)/360;
 
-               //compare angle percent to each percentage of data (added on top)
+               //compare angle percent to each percentage of data (added on top) to determine which pie slice is currenty mouseovered
                let mouseTouchingData = 0;
                let foundCorrectTouchData = false;
+               let tmp = 0;
                while(foundCorrectTouchData == false) {
-                   
+                   let total = this.totalNumber(dataSet);
+                   let percent = this.calcPercentOfWhole(total, dataSet[mouseTouchingData]);
+                   if(anglePercent <= percent+tmp) {
+                       foundCorrectTouchData = true;
+                   }
+                   else {
+                       tmp += dataSet[mouseTouchingData];
+                       mouseTouchingData++;
+                   }
                }
+
+               //IT FUCKING  WORKS!!!!!
 
 
                
-               console.log(originLine.x + " " + originLine.y + " " + mouseLine.x + " " + mouseLine.y + " " + mouseAngle + " " + anglePercent);  
+               console.log(originLine.x + " " + originLine.y + " " + mouseLine.x + " " + mouseLine.y + " " + mouseAngle + " " + anglePercent + " " + mouseTouchingData);  
            }
         });
     }
@@ -420,7 +431,7 @@ class Gcanvas {
         for(let i = 0; i < dataSet.length; i++) {
             total+= dataSet[i];
         }
-        return total
+        return total;
     }
 
     isInsideCircle(origin_x, origin_y, mouse_x, mouse_y, radius) {
@@ -453,4 +464,4 @@ class Gcanvas {
 
 
 //
-console.log("Gcanvas Version 0.0.2");    
+console.log("Gcanvas Version 0.0.3");    
