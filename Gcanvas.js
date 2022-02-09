@@ -392,7 +392,7 @@ class Gcanvas {
 
                //tutorial for circle following mouse on canvas
                // https://www.educative.io/collection/page/10370001/5712018204000256/4730262499885056
-               
+
 
 
                
@@ -403,6 +403,8 @@ class Gcanvas {
 
     //svg -> image -> canvas 
     //https://levelup.gitconnected.com/draw-an-svg-to-canvas-and-download-it-as-image-in-javascript-f7f7713cf81f
+
+    //maybe solution: draw another canvas on top to display stuff
 
     /**
      * Helper Functions
