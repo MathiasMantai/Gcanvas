@@ -363,12 +363,9 @@ class Gcanvas {
                    y: 20
                };
 
-
+               
            }
-
-    
         });
-
     }
 
     //svg -> image -> canvas 
