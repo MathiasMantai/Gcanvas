@@ -1,0 +1,6 @@
+zu Kontakten:
+- Wenn der Kunde nur einen Kontakt mit einer E-Mail Adresse hinterlegt hat, wird diese automatisch bei E-Mail erstellung in des Feld geschrieben. 
+- Wenn ein Kunde jedoch mehrere Kontakte hat, wird nichts in das Feld geschrieben und der user muss selbst einen Empfänger aus der Liste auswählen
+
+zu Vorlagen:
+- Bei Vorlagen kommt es nur auf das Feld "Position" an. Die Vorlage mit dem kleinsten Wert bei "Position" wird automatisch übernommen. Hierbei spielt es keine Rolle, ob es eine globale, private oder sonst wie konfigurierte Vorlage ist.
