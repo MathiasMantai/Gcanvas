@@ -12,22 +12,25 @@ let ringChart = {
         fontSize: "18px",
         textColor: "black",
         origin_x: 190,
-        origin_y: 150
+        origin_y: 130
     },
     labels: [
-        "Hans",
-        "Bob",
-        "Dietrich"
+        "Spieler1",
+        "Spieler2",
+        "Spieler3",
+        "Spieler4"
     ],
     data: [
         30,
         50,
-        20
+        10,
+        10
     ],
     colors: [
         "#0080FF",
         "#B649FF",
-        "#47C168"
+        "#47C168",
+        "#ff00ff"
     ]
 }
 

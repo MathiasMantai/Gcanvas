@@ -354,7 +354,7 @@ class Gcanvas {
                //vector for originLine
                let originLine = {
                    x: (pieNumbers.origin_x+pieNumbers.radius_max) - pieNumbers.origin_x,
-                   y: (pieNumbers.origin_y+pieNumbers.radius_max) - pieNumbers.origin_y
+                   y: 0
                };
 
                //vector for line connecting origin point and mouse coordinates
@@ -367,11 +367,13 @@ class Gcanvas {
                //use Math.acos(zahl) for calculation
                const mouseAngleTop = (originLine.x*mouseLine.x) + (originLine.y*mouseLine.y);
                const mouseAngleBottom = Math.sqrt(originLine.x*originLine.x + originLine.y*originLine.y) * Math.sqrt(mouseLine.x*mouseLine.x + mouseLine.y*mouseLine.y); 
-               const mouseAngle = Math.acos(mouseAngleTop / mouseAngleBottom) * (180/Math.PI);
-               console.log(originLine.x + " " + originLine.y + " " + mouseLine.x + " " + mouseLine.y + " " + mouseAngle);
+               let mouseAngle = Math.acos(mouseAngleTop / mouseAngleBottom) * (180/Math.PI);
+               if(mouseLine.y < 0) mouseAngle = 360-mouseAngle;
 
+               let anglePercent = (100*mouseAngle)/360;
 
-               
+               //transfer angle into percent
+               console.log(originLine.x + " " + originLine.y + " " + mouseLine.x + " " + mouseLine.y + " " + mouseAngle + " " + anglePercent);  
            }
         });
     }
@@ -429,6 +431,8 @@ class Gcanvas {
     infoLog(infoMessage) {
         console.log(infoMessage);
     }
+
+
 };
 
 
