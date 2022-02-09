@@ -390,6 +390,10 @@ class Gcanvas {
 
                //IT FUCKING  WORKS!!!!!
 
+               //tutorial for circle following mouse on canvas
+               // https://www.educative.io/collection/page/10370001/5712018204000256/4730262499885056
+               
+
 
                
                console.log(originLine.x + " " + originLine.y + " " + mouseLine.x + " " + mouseLine.y + " " + mouseAngle + " " + anglePercent + " " + mouseTouchingData);  
