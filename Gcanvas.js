@@ -383,7 +383,7 @@ class Gcanvas {
                        foundCorrectTouchData = true;
                    }
                    else {
-                       tmp += dataSet[mouseTouchingData];
+                       tmp += percent;
                        mouseTouchingData++;
                    }
                }
