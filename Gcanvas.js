@@ -224,10 +224,8 @@ class Gcanvas {
             space = 0.01;
         }
 
-        let total = 0;
-        for(let i = 0; i < dataLength; i++) {
-            total+= dataSet[i];
-        }
+        let total = this.totalNumber(dataSet);
+
         let startingPoint = 0;
         for(let i = 0; i < dataLength; i++) {
             let percent = this.calcPercentOfWhole(total, dataSet[i]);
@@ -260,7 +258,7 @@ class Gcanvas {
          
         //create legend, if legendarray exists
         if(object["legend"] != null && object["legend"] != undefined && this.objectLength(object["legend"])> 0) {
-            this.addLegendToChart("ring", labelSet, standardLabels, colorSet, standardColors, object["legend"], dataLength, pieNumbers);
+            this.addLegendToChart("ring", labelSet, standardLabels, colorSet, standardColors, object["legend"], dataLength, pieNumbers, dataSet);
             this.infoLog("legend added");
         }
     }
@@ -287,7 +285,7 @@ class Gcanvas {
         
     }
   
-    addLegendToChart(chartType, labelsArray, standardLabels, colorArray, standardColors, legendObject, dataLength, pieNumbers) {
+    addLegendToChart(chartType, labelsArray, standardLabels, colorArray, standardColors, legendObject, dataLength, pieNumbers, dataSet) {
         let Gcontext = this.canvas.getContext(this.context);
         let object = legendObject;
 
@@ -370,9 +368,19 @@ class Gcanvas {
                let mouseAngle = Math.acos(mouseAngleTop / mouseAngleBottom) * (180/Math.PI);
                if(mouseLine.y < 0) mouseAngle = 360-mouseAngle;
 
-               let anglePercent = (100*mouseAngle)/360;
 
                //transfer angle into percent
+               let anglePercent = (100*mouseAngle)/360;
+
+               //compare angle percent to each percentage of data (added on top)
+               let mouseTouchingData = 0;
+               let foundCorrectTouchData = false;
+               while(foundCorrectTouchData == false) {
+                   
+               }
+
+
+               
                console.log(originLine.x + " " + originLine.y + " " + mouseLine.x + " " + mouseLine.y + " " + mouseAngle + " " + anglePercent);  
            }
         });
@@ -405,6 +413,14 @@ class Gcanvas {
 
     objectLength(object) {
         return Object.keys(object).length;
+    }
+
+    totalNumber(dataSet) {
+        let total = 0;
+        for(let i = 0; i < dataSet.length; i++) {
+            total+= dataSet[i];
+        }
+        return total
     }
 
     isInsideCircle(origin_x, origin_y, mouse_x, mouse_y, radius) {
