@@ -3,7 +3,8 @@
 ## Features
 0.0.2
 - added legend for chart
-- 
+- added color to label
+- mousover event correctly calculates which part of the ring diagramm the mouse is currently moving over
 
 0.0.1
 - create multiple canvas elements
@@ -13,5 +14,7 @@
 ## TODO
 - show data for each chart
 - add support for quadratic and
-- add color to label
 - add support for addittional css styles
+
+### IMPORTANT
+- make legend either be vertical or horizontally aligned

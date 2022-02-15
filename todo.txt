@@ -1,2 +1,1 @@
-- register npm account 
-- try to upload library to npm
+- 
