@@ -11,7 +11,7 @@ let ringChart = {
         font: "Arial",
         fontSize: "18px",
         textColor: "black",
-        origin_x: 190,
+        origin_x: 200,
         origin_y: 130
     },
     labels: [
