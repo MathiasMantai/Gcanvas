@@ -285,18 +285,27 @@ class Gcanvas {
   
     addLegendToChart(chartType, labelsArray, standardLabels, colorArray, standardColors, legendObject, dataLength, pieNumbers, dataSet) {
         let Gcontext = this.canvas.getContext(this.context);
+
+        //create new object instead of referencing to existing one (solved error, which impacted the legend coordinates)
         let object = new Object();
         Object.entries(legendObject).forEach(entry => {
             const[key, value] = entry;
             object[key] = value;
         });
-        //let object = legendObject;
 
         //error handling for legend object
         if(legendObject["origin_x"] == '' || legendObject["origin_x"] == null || legendObject["origin_x"] == undefined || legendObject["origin_y"] == '' || legendObject["origin_y"] == null || legendObject["origin_y"] == undefined) {
             this.errorLog("coordinates for legend not defined or false");
             return;
         }
+
+        let dataBox = document.createElement("div");
+        dataBox.style.border = "1px solid black";
+        dataBox.style.width = "50px";
+        dataBox.style.height = "50px";
+        dataBox.style.position = "relative";
+        // dataBox.style.display = "none";
+        document.getElementById(this.parent).appendChild(dataBox);
 
         //arrays for labels and colors
         let labels = [];
@@ -347,6 +356,9 @@ class Gcanvas {
                 x: (e.clientX - rect.left) * scaleX,
                 y: (e.clientY - rect.top) * scaleY
             }
+            console.log(e.pageX+ " " +mouse.x);
+            dataBox.style.left = (e.pageX - mouse.x) + 'px' ;
+            dataBox.style.top = (e.pageY - mouse.y) + 'px';
 
            //if inside ring, determine what data the mouse is hovering over
            if(this.isInsideRing(pieNumbers.origin_x,pieNumbers.origin_y,mouse.x,mouse.y, pieNumbers.radius_circle, pieNumbers.radius_max)) {

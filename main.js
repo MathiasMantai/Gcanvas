@@ -1,10 +1,11 @@
 let canvas2 = new Gcanvas("canvas2", 300, 200, "white", "test2", "2d", null);
-let canvas = new Gcanvas("canvas", 300, 200, "white", "test", "2d", null);
+
 
 //canvas.drawLine(5,5,100,100,10,"blue");
 
 let ringChart = {
     space: "yes",
+    showNumbers: "yes",
     origin_x: 100,
     origin_y: 100,
     radius_max: 80,
@@ -69,4 +70,4 @@ let ringChart2 = {
     ]
 }
 canvas2.drawRingChart(ringChart);
-canvas.drawRingChart(ringChart);
+
