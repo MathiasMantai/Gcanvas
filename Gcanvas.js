@@ -240,20 +240,18 @@ class Gcanvas {
 
             //set new satrtingPoint to endPoint
             startingPoint = endPoint;
-
         }
         //draw transparent circle
 
         let radiusTrans = pieNumbers.radius_max - pieNumbers.radius_circle;
+
         if(radiusTrans > 0 && radiusTrans < pieNumbers.radius_max) {
-           
             Gcontext.beginPath();
             Gcontext.fillStyle = this.backGroundColor;
             Gcontext.globalAlpha = 1;
             Gcontext.moveTo(pieNumbers.origin_x, pieNumbers.origin_y);
             Gcontext.arc(pieNumbers.origin_x, pieNumbers.origin_y, radiusTrans, 0, 2*Math.PI);
             Gcontext.fill();
-           
         }
          
         //create legend, if legendarray exists
@@ -287,7 +285,12 @@ class Gcanvas {
   
     addLegendToChart(chartType, labelsArray, standardLabels, colorArray, standardColors, legendObject, dataLength, pieNumbers, dataSet) {
         let Gcontext = this.canvas.getContext(this.context);
-        let object = legendObject;
+        let object = new Object();
+        Object.entries(legendObject).forEach(entry => {
+            const[key, value] = entry;
+            object[key] = value;
+        });
+        //let object = legendObject;
 
         //error handling for legend object
         if(legendObject["origin_x"] == '' || legendObject["origin_x"] == null || legendObject["origin_x"] == undefined || legendObject["origin_y"] == '' || legendObject["origin_y"] == null || legendObject["origin_y"] == undefined) {

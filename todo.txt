@@ -1,1 +1,7 @@
-- 
+for ring diagram:
+- find coordinates of middle of outer circle section to draw numbers adjacent to it
+
+fehler zurzeit:
+- irgendwo werden die werte des ringchart objektes verändert, weshalb bei dem zweiten ringchart die koordinaten verschoben waren
+--> Lösung: verändere werte aus object nicht, sondern kreire neue variablen und objekte in der Gcanvas Klasse
+-->zeile 330
