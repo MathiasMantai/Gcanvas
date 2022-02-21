@@ -71,3 +71,4 @@ let ringChart2 = {
 canvas2.drawRingChart(ringChart);
 canvas.drawRingChart(ringChart);
 
+g
