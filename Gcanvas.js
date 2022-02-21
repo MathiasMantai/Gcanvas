@@ -303,8 +303,8 @@ class Gcanvas {
         dataBox.style.border = "1px solid black";
         dataBox.style.width = "50px";
         dataBox.style.height = "50px";
-        dataBox.style.position = "relative";
-        // dataBox.style.display = "none";
+        dataBox.style.position = "absolute";
+        dataBox.style.display = "none";
         document.getElementById(this.parent).appendChild(dataBox);
 
         //arrays for labels and colors
@@ -357,8 +357,8 @@ class Gcanvas {
                 y: (e.clientY - rect.top) * scaleY
             }
             console.log(e.pageX+ " " +mouse.x);
-            dataBox.style.left = (e.pageX - mouse.x) + 'px' ;
-            dataBox.style.top = (e.pageY - mouse.y) + 'px';
+            dataBox.style.left = mouse.x + 'px' ;
+            dataBox.style.top = mouse.y + 'px';
 
            //if inside ring, determine what data the mouse is hovering over
            if(this.isInsideRing(pieNumbers.origin_x,pieNumbers.origin_y,mouse.x,mouse.y, pieNumbers.radius_circle, pieNumbers.radius_max)) {
@@ -408,10 +408,17 @@ class Gcanvas {
                //tutorial for circle following mouse on canvas
                // https://www.educative.io/collection/page/10370001/5712018204000256/4730262499885056
 
+               //show dataBox
+               dataBox.style.display = "";
+
 
 
                
                console.log(originLine.x + " " + originLine.y + " " + mouseLine.x + " " + mouseLine.y + " " + mouseAngle + " " + anglePercent + " " + mouseTouchingData);  
+           }
+           else {
+               //make the dataBox hidden again
+               dataBox.style.display = "none";
            }
         });
     }
