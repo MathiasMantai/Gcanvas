@@ -486,10 +486,7 @@ class Gcanvas {
     infoLog(infoMessage) {
         console.log(infoMessage);
     }
-
-
 };
 
-
-//
+//Version Number
 console.log("Gcanvas Version 0.0.3");    
