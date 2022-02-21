@@ -11,7 +11,7 @@ plot chart (curve where lines are connected by dots in coordinate system)
 
 fehler zurzeit:
 -----------------------
-
+- if more than one canvases exist the dataBox will stay at the first on and not move to the next when hovering over another canvas
 -----------------------
 
 
