@@ -10,6 +10,9 @@ class Gcanvas {
         this.canvas;
         //create the canvas
         this.init();
+
+        //debug mode is off by default, can be turned on with method debugMode()
+        this.debug = false;
     }
 
     //init canvas
@@ -48,6 +51,10 @@ class Gcanvas {
         this.canvas.style.width  = this.canvas.width  / window.devicePixelRatio + "px";
 
         if(error == 0) this.infoLog("Gcanvas successfully initialized");
+    }
+
+    debugMode() {
+        this.debug = true;
     }
 
     /**
@@ -282,7 +289,7 @@ class Gcanvas {
     imageToCanvas() {
         
     }
-  
+
     addLegendToChart(chartType, labelsArray, standardLabels, colorArray, standardColors, legendObject, dataLength, pieNumbers, dataSet) {
         let Gcontext = this.canvas.getContext(this.context);
 
@@ -299,13 +306,7 @@ class Gcanvas {
             return;
         }
 
-        let dataBox = document.createElement("div");
-        dataBox.style.border = "1px solid black";
-        dataBox.style.width = "50px";
-        dataBox.style.height = "50px";
-        dataBox.style.position = "absolute";
-        dataBox.style.display = "none";
-        document.getElementById(this.parent).appendChild(dataBox);
+        let dataBox = this.createDataBox(this.parent);
 
         //arrays for labels and colors
         let labels = [];
@@ -335,8 +336,6 @@ class Gcanvas {
             Gcontext.fillStyle = colors[i];
             Gcontext.fillRect(object["origin_x"]-(parseInt(object["fontSize"].replace("px", ""))/2), object["origin_y"]-(parseInt(object["fontSize"].replace("px", ""))/2), parseInt(object["fontSize"].replace("px", ""))/2.5, parseInt(object["fontSize"].replace("px", ""))/2.5);
 
-
-
             //draw the text
             Gcontext.fillStyle = object["textColor"];
             Gcontext.fillText(labels[i],object["origin_x"],object["origin_y"]);
@@ -356,70 +355,71 @@ class Gcanvas {
                 x: (e.clientX - rect.left) * scaleX,
                 y: (e.clientY - rect.top) * scaleY
             }
-            console.log(e.pageX+ " " +mouse.x);
-            dataBox.style.left = mouse.x + 'px' ;
-            dataBox.style.top = mouse.y + 'px';
 
-           //if inside ring, determine what data the mouse is hovering over
-           if(this.isInsideRing(pieNumbers.origin_x,pieNumbers.origin_y,mouse.x,mouse.y, pieNumbers.radius_circle, pieNumbers.radius_max)) {
-               //determine the angle between starting point line and line that connects the mouse position with the diagramm origin
+            if(this.debug == true) {
+                console.log(e.pageX+ " " +mouse.x);
+            }
+            
+            //position of the dataBox, when moving the mouse over the canvas
+            dataBox.style.left = e.clientX + 10 + 'px';
+            dataBox.style.top = e.clientY - 5 + 'px';
 
-               //vector for originLine
-               let originLine = {
-                   x: (pieNumbers.origin_x+pieNumbers.radius_max) - pieNumbers.origin_x,
-                   y: 0
-               };
+            //if inside ring, determine what data the mouse is hovering over
+            if(this.isInsideRing(pieNumbers.origin_x,pieNumbers.origin_y,mouse.x,mouse.y, pieNumbers.radius_circle, pieNumbers.radius_max)) {
+                //determine the angle between starting point line and line that connects the mouse position with the diagramm origin
 
-               //vector for line connecting origin point and mouse coordinates
-               let mouseLine = {
-                   x: mouse.x - pieNumbers.origin_x,
-                   y: mouse.y - pieNumbers.origin_y
-               };
+                //vector for originLine
+                let originLine = {
+                    x: (pieNumbers.origin_x+pieNumbers.radius_max) - pieNumbers.origin_x,
+                    y: 0
+                };
 
-               //calculate the scalarproduct
-               //use Math.acos(zahl) for calculation
-               const mouseAngleTop = (originLine.x*mouseLine.x) + (originLine.y*mouseLine.y);
-               const mouseAngleBottom = Math.sqrt(originLine.x*originLine.x + originLine.y*originLine.y) * Math.sqrt(mouseLine.x*mouseLine.x + mouseLine.y*mouseLine.y); 
-               let mouseAngle = Math.acos(mouseAngleTop / mouseAngleBottom) * (180/Math.PI);
-               if(mouseLine.y < 0) mouseAngle = 360-mouseAngle;
+                //vector for line connecting origin point and mouse coordinates
+                let mouseLine = {
+                    x: mouse.x - pieNumbers.origin_x,
+                    y: mouse.y - pieNumbers.origin_y
+                };
 
-
-               //transfer angle into percent
-               let anglePercent = (100*mouseAngle)/360;
-
-               //compare angle percent to each percentage of data (added on top) to determine which pie slice is currenty mouseovered
-               let mouseTouchingData = 0;
-               let foundCorrectTouchData = false;
-               let tmp = 0;
-               while(foundCorrectTouchData == false) {
-                   let total = this.totalNumber(dataSet);
-                   let percent = this.calcPercentOfWhole(total, dataSet[mouseTouchingData]);
-                   if(anglePercent <= percent+tmp) {
-                       foundCorrectTouchData = true;
-                   }
-                   else {
-                       tmp += percent;
-                       mouseTouchingData++;
-                   }
-               }
-
-               //IT FUCKING  WORKS!!!!!
-
-               //tutorial for circle following mouse on canvas
-               // https://www.educative.io/collection/page/10370001/5712018204000256/4730262499885056
-
-               //show dataBox
-               dataBox.style.display = "";
+                //calculate the scalarproduct
+                //use Math.acos(zahl) for calculation
+                const mouseAngleTop = (originLine.x*mouseLine.x) + (originLine.y*mouseLine.y);
+                const mouseAngleBottom = Math.sqrt(originLine.x*originLine.x + originLine.y*originLine.y) * Math.sqrt(mouseLine.x*mouseLine.x + mouseLine.y*mouseLine.y); 
+                let mouseAngle = Math.acos(mouseAngleTop / mouseAngleBottom) * (180/Math.PI);
+                if(mouseLine.y < 0) mouseAngle = 360-mouseAngle;
 
 
+                //transfer angle into percent
+                let anglePercent = (100*mouseAngle)/360;
 
-               
-               console.log(originLine.x + " " + originLine.y + " " + mouseLine.x + " " + mouseLine.y + " " + mouseAngle + " " + anglePercent + " " + mouseTouchingData);  
-           }
-           else {
-               //make the dataBox hidden again
-               dataBox.style.display = "none";
-           }
+                //compare angle percent to each percentage of data (added on top) to determine which pie slice is currenty mouseovered
+                let mouseTouchingData = 0;
+                let foundCorrectTouchData = false;
+                let tmp = 0;
+                while(foundCorrectTouchData == false) {
+                    let total = this.totalNumber(dataSet);
+                    let percent = this.calcPercentOfWhole(total, dataSet[mouseTouchingData]);
+                    if(anglePercent <= percent+tmp) {
+                        foundCorrectTouchData = true;
+                    }
+                    else {
+                        tmp += percent;
+                        mouseTouchingData++;
+                    }
+                }
+
+                //show dataBox
+                dataBox.style.display = "";
+
+                //display data inside dataBox
+                dataBox.innerText = dataSet[mouseTouchingData];
+                if(this.debug == true) {
+                    console.log(originLine.x + " " + originLine.y + " " + mouseLine.x + " " + mouseLine.y + " " + mouseAngle + " " + anglePercent + " " + mouseTouchingData);  
+                }
+            }
+            else {
+                //make the dataBox hidden again
+                dataBox.style.display = "none";
+            }
         });
     }
 
@@ -448,6 +448,21 @@ class Gcanvas {
     drawPieSlice() {
         //todo
         //helper function for drawPieChart and drawRingChart
+    }
+
+    createDataBox(parent) {
+        let dataBox = document.createElement("div");
+        dataBox.style.border = "1px solid black";
+        dataBox.style.width = "50px";
+        dataBox.style.height = "25px";
+        dataBox.style.position = "absolute";
+        dataBox.style.display = "none";
+        dataBox.style.textAlign = "center";
+        dataBox.style.verticalAlign = "center";
+        dataBox.style.justifyContent = "center";
+        dataBox.style.margin = "0 auto";
+        document.getElementById(parent).appendChild(dataBox);
+        return dataBox;
     }
 
     objectLength(object) {
