@@ -71,10 +71,14 @@ let ringChart2 = {
 }
 
 let lineChart = {
-    spaceBetween: '10px',
+    lineWidth: 5,
+    spaceBetween: 10,
     coordinateSystem: 'yes',
-    origin_x: 5,
-    origin_y: 180,
+    //2 points for chart dimensions
+    origin_x1: 5,
+    origin_y1: 180,
+    origin_x2: 180,
+    origin_y2: 5,
     data: [
         150,
         80,

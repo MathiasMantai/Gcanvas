@@ -13,6 +13,13 @@ class Gcanvas {
 
         //debug mode is off by default, can be turned on with method debugMode()
         this.debug = false;
+
+        //list of standard colors, when user does not specifiy colorset
+        this.standardColors = [
+            '#000',
+            '#3f05a',
+
+        ]
     }
 
     //init canvas
@@ -223,55 +230,40 @@ class Gcanvas {
             return;
         }
 
-        //standard data for the appearance of the pie chart
-        let pieNumbers = {
-            origin_x: (object["origin_x"] == undefined) ? (this.width / 2) : object["origin_x"],
-            origin_y: (object["origin_y"] == undefined) ? (this.height / 2) : object["origin_y"],
-            radius_max: (object["radius_max"] == undefined) ? ((this.width+this.height)*2) : object["radius_max"],
-            radius_circle: (object["radius_circle"] == undefined) ? 20 : object["radius_circle"]
-        };
-
-        //add space if declared in object
-        let space = 0;
-        if(object["space"] != undefined && object["space"] != null && object["space"] == "yes") {
-            space = 0.01;
+        //Create Standard color and label sets if none are given
+        if(standardLabels == true) {
+            labelSet = this.createStandardLabelSet(dataLength);
         }
 
-        let total = this.totalNumber(dataSet);
-
-        let startingPoint = 0;
-        for(let i = 0; i < dataLength; i++) {
-            let percent = this.calcPercentOfWhole(total, dataSet[i]);
-            let endPoint = this.newEndPoint(percent, startingPoint);
-            
-            //draw Pie slice
-            Gcontext.beginPath();
-            Gcontext.fillStyle = colorSet[i];
-            Gcontext.moveTo(pieNumbers.origin_x, pieNumbers.origin_y);
-            Gcontext.arc(pieNumbers.origin_x, pieNumbers.origin_y, pieNumbers.radius_max, (startingPoint+space)*Math.PI, endPoint*Math.PI);
-            Gcontext.fill();
-
-            //set new satrtingPoint to endPoint
-            startingPoint = endPoint;
+        if(standardColors == true) {
+            colorSet = this.createStandardColorSet(dataLength);
         }
-        //draw transparent circle
 
-        let radiusTrans = pieNumbers.radius_max - pieNumbers.radius_circle;
 
-        if(radiusTrans > 0 && radiusTrans < pieNumbers.radius_max) {
-            Gcontext.beginPath();
-            Gcontext.fillStyle = this.backGroundColor;
-            Gcontext.globalAlpha = 1;
-            Gcontext.moveTo(pieNumbers.origin_x, pieNumbers.origin_y);
-            Gcontext.arc(pieNumbers.origin_x, pieNumbers.origin_y, radiusTrans, 0, 2*Math.PI);
-            Gcontext.fill();
+
+        //set Data for creation of the coordinate system
+        let lineNumbers = {
+            origin_x1: (object['origin_x1'] == undefined) ? 5 : object['origin_x1'],
+            origin_x1: (object['origin_y1'] == undefined) ? this.height-5 : object['origin_y1'], 
+            origin_x1: (object['origin_x2'] == undefined) ? this.width-5 : object['origin_x2'], 
+            origin_x1: (object['origin_x1'] == undefined) ? 5 : object['origin_y2'],
+            lineWidth: (object['lineWidth'] == undefined) ? 4 : object['lineWidth'] 
         }
-         
+
+        //draw coordinate system if the attribute is set
+        if(object['coordinateSystem'] == 'yes') {
+            this.drawCoordinateSystem(dataSet, labelSet, colorSet, lineNumbers);
+        }
+
+
+
+
+    
         //create legend, if legendarray exists
-        if(object["legend"] != null && object["legend"] != undefined && this.objectLength(object["legend"])> 0) {
-            this.addLegendToChart("ring", labelSet, standardLabels, colorSet, standardColors, object["legend"], dataLength, pieNumbers, dataSet);
-            this.infoLog("legend added");
-        }
+        // if(object["legend"] != null && object["legend"] != undefined && this.objectLength(object["legend"])> 0) {
+        //     this.addLegendToChart("ring", labelSet, standardLabels, colorSet, standardColors, object["legend"], dataLength, pieNumbers, dataSet);
+        //     this.infoLog("legend added");
+        // }
     }
 
     drawRingChart(object) {
@@ -530,6 +522,24 @@ class Gcanvas {
         });
     }
 
+    createStandardLabelSet(length) {
+        //standard labels go 'Label1 ... Labeln'
+        let arr = [];
+        for(let i = 1; i <= length; i++) {
+            arr.push('Label'+i);
+        }
+        return arr;
+    }
+
+    createStandardColorSet(length) {
+        //standard colors are taken from the standardcolors array defined in the constructor
+        let arr = []
+        for(let i = 0; i < length; i++) {
+            arr.push(this.standardColors[i]); 
+        }
+        return arr;
+    }
+
     //svg -> image -> canvas 
     //https://levelup.gitconnected.com/draw-an-svg-to-canvas-and-download-it-as-image-in-javascript-f7f7713cf81f
 
@@ -579,6 +589,16 @@ class Gcanvas {
         // dataBox.appendChild(arrowBox);
         document.getElementById(parent).appendChild(dataBox);
         return dataBox;
+    }
+
+    drawCoordinateSystem(dataSet, labelSet, colorSet, ) {
+        /**
+         * coordinate system
+         * 1 horizontal line
+         * 1 vertical line
+         * 4 lines for the arrowheads
+         * 
+         */
     }
 
     objectLength(object) {
