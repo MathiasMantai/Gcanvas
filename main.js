@@ -69,6 +69,22 @@ let ringChart2 = {
         "#ff00ff"
     ]
 }
+
+let lineChart = {
+    spaceBetween: '10px',
+    coordinateSystem: 'yes',
+    origin_x: 5,
+    origin_y: 180,
+    data: [
+        150,
+        80,
+        5,
+        2000
+    ]
+}
+
+
+
 canvas2.debugMode();
 canvas2.drawRingChart(ringChart);
 canvas.drawRingChart(ringChart);

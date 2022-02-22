@@ -167,6 +167,113 @@ class Gcanvas {
         }
     }
     
+
+    /**
+     * 
+     * @param {object} object object containing all properties for the chart
+     * @returns 
+     */
+    drawLineChart(object) {
+        let Gcontext = this.canvas.getContext(this.context);
+        let error = 0;
+
+        let dataSet = object["data"];
+        let dataLength = dataSet.length;
+
+        let standardLabels = false;
+        let labelSet = object["labels"];
+        let labelLength = labelSet.length;
+
+        //if no labels are specified, we use standard labels in the form of label1, ..., labeln
+        if(labelSet == null || labelLength == 0 || labelSet == undefined) {
+            standardLabels = true;
+            this.infoLog("standard labels will be used, since no or empty label array was found");
+        }
+
+        //error when label array exists and has content, but label and data dont match in length, we throw an error
+        if(labelSet != null && labelSet != undefined && labelLength > 0 && labelLength != dataLength) {
+          this.errorLog("data and label arrays do not match");
+          return;
+        }
+
+        //colors
+        let standardColors = false;
+        let colorSet = object["colors"];
+        let colorLength = colorSet.length;
+
+
+        //check if all given colors are valid
+        for(let color in colorSet) {
+            if(!this.isValidColor(color)) {
+                error++;
+            }
+        };
+        if(error > 0) this.errorLog("non valid color has been given in color array");
+
+
+        //standard colors, when color array is empty or was not found
+        if(colorSet == undefined || colorSet == null || colorLength == 0) {
+            standardColors = true;
+            this.infoLog("standard colors will be used, since no or empty color array was found");
+        }
+
+        //error handling when color array is not correct
+        if(colorSet != null && colorSet != undefined && colorLength > 0 && colorLength != dataLength) {
+            this.errorLog("color and data arrays do not match");
+            return;
+        }
+
+        //standard data for the appearance of the pie chart
+        let pieNumbers = {
+            origin_x: (object["origin_x"] == undefined) ? (this.width / 2) : object["origin_x"],
+            origin_y: (object["origin_y"] == undefined) ? (this.height / 2) : object["origin_y"],
+            radius_max: (object["radius_max"] == undefined) ? ((this.width+this.height)*2) : object["radius_max"],
+            radius_circle: (object["radius_circle"] == undefined) ? 20 : object["radius_circle"]
+        };
+
+        //add space if declared in object
+        let space = 0;
+        if(object["space"] != undefined && object["space"] != null && object["space"] == "yes") {
+            space = 0.01;
+        }
+
+        let total = this.totalNumber(dataSet);
+
+        let startingPoint = 0;
+        for(let i = 0; i < dataLength; i++) {
+            let percent = this.calcPercentOfWhole(total, dataSet[i]);
+            let endPoint = this.newEndPoint(percent, startingPoint);
+            
+            //draw Pie slice
+            Gcontext.beginPath();
+            Gcontext.fillStyle = colorSet[i];
+            Gcontext.moveTo(pieNumbers.origin_x, pieNumbers.origin_y);
+            Gcontext.arc(pieNumbers.origin_x, pieNumbers.origin_y, pieNumbers.radius_max, (startingPoint+space)*Math.PI, endPoint*Math.PI);
+            Gcontext.fill();
+
+            //set new satrtingPoint to endPoint
+            startingPoint = endPoint;
+        }
+        //draw transparent circle
+
+        let radiusTrans = pieNumbers.radius_max - pieNumbers.radius_circle;
+
+        if(radiusTrans > 0 && radiusTrans < pieNumbers.radius_max) {
+            Gcontext.beginPath();
+            Gcontext.fillStyle = this.backGroundColor;
+            Gcontext.globalAlpha = 1;
+            Gcontext.moveTo(pieNumbers.origin_x, pieNumbers.origin_y);
+            Gcontext.arc(pieNumbers.origin_x, pieNumbers.origin_y, radiusTrans, 0, 2*Math.PI);
+            Gcontext.fill();
+        }
+         
+        //create legend, if legendarray exists
+        if(object["legend"] != null && object["legend"] != undefined && this.objectLength(object["legend"])> 0) {
+            this.addLegendToChart("ring", labelSet, standardLabels, colorSet, standardColors, object["legend"], dataLength, pieNumbers, dataSet);
+            this.infoLog("legend added");
+        }
+    }
+
     drawRingChart(object) {
         let Gcontext = this.canvas.getContext(this.context);
         let error = 0;
@@ -453,8 +560,6 @@ class Gcanvas {
     createDataBox(parent) {
         let dataBox = document.createElement("div");
         dataBox.style.border = "1px solid black";
-
-        
         dataBox.style.height = "20px";
         dataBox.style.position = "absolute";
         dataBox.style.display = "none";
@@ -463,8 +568,6 @@ class Gcanvas {
         dataBox.style.justifyContent = "center";
         dataBox.style.backgroundColor = 'black';
         dataBox.style.color = 'white';
-    
-
         //child elements
         // let arrowBox = document.createElement('span');
         // arrowBox.style.width = '0';
@@ -474,9 +577,6 @@ class Gcanvas {
         // arrowBox.style.borderLeft = '10px solid transparent';
         // arrowBox.style.borderRight = '10px solid black';
         // dataBox.appendChild(arrowBox);
-
-
-
         document.getElementById(parent).appendChild(dataBox);
         return dataBox;
     }
