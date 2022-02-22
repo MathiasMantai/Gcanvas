@@ -453,14 +453,30 @@ class Gcanvas {
     createDataBox(parent) {
         let dataBox = document.createElement("div");
         dataBox.style.border = "1px solid black";
-        dataBox.style.width = "50px";
-        dataBox.style.height = "25px";
+
+        
+        dataBox.style.height = "20px";
         dataBox.style.position = "absolute";
         dataBox.style.display = "none";
         dataBox.style.textAlign = "center";
         dataBox.style.verticalAlign = "center";
         dataBox.style.justifyContent = "center";
-        dataBox.style.margin = "0 auto";
+        dataBox.style.backgroundColor = 'black';
+        dataBox.style.color = 'white';
+    
+
+        //child elements
+        // let arrowBox = document.createElement('span');
+        // arrowBox.style.width = '0';
+        // arrowBox.style.height = '0';
+        // arrowBox.style.borderTop = '10px solid transparent';
+        // arrowBox.style.borderBottom = '10px solid transparent';
+        // arrowBox.style.borderLeft = '10px solid transparent';
+        // arrowBox.style.borderRight = '10px solid black';
+        // dataBox.appendChild(arrowBox);
+
+
+
         document.getElementById(parent).appendChild(dataBox);
         return dataBox;
     }

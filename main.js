@@ -24,7 +24,7 @@ let ringChart = {
         "Spieler4"
     ],
     data: [
-        30,
+        300,
         50,
         10,
         10

@@ -2,16 +2,16 @@ for ring diagram:
 - find coordinates of middle of outer circle section to draw numbers adjacent to it
 - finish dataBox for ring chart
 
-next project:
-- balkendiagramm
 
-after that:
-plot chart (curve where lines are connected by dots in coordinate system)
---> method to draw coordinate system
 
-fehler zurzeit:
+todo
 -----------------------
-- if more than one canvases exist the dataBox will stay at the first on and not move to the next when hovering over another canvas
+- styling of the dataBox
+- different methods of showing data when hovering with mouse (draw numbers adjascent to the circle section)
+- color validation doesn't work correctly yet
+- balkendiagramm
+- Liniendiagramm (curve where lines are connected by dots in coordinate system)
+--> method to draw coordinate system
 -----------------------
 
 
@@ -19,5 +19,6 @@ gelöst:
 -----------------------
 - irgendwo werden die werte des ringchart objektes verändert, weshalb bei dem zweiten ringchart die koordinaten verschoben waren
 --> Lösung: verändere werte aus object nicht, sondern kreire neue variablen und objekte in der Gcanvas Klasse
--->zeile 330
+--> zeile 330
+- if more than one canvases exist the dataBox will stay at the first on and not move to the next when hovering over another canvas
 -----------------------
