@@ -545,16 +545,18 @@ class Gcanvas {
 
     findRelativeParent(element) {
         let foundRelativeParent = false;
-        if(element && element.offsetParent) {
+        console.log(element);
+        if(!element || !element.offsetParent || element.offsetParent == document.body) {
+            
+            if(foundRelativeParent) return element;
+            else return this.canvas;
+        }
+        else {
             let e = element.offsetParent;
             if(e.style.position == "relative") {
                 foundRelativeParent = true;
             }
             else this.findRelativeParent(e.offsetParent);
-        }
-        else {
-            if(foundRelativeParent) return element;
-            else return this.canvas;
         }
     }
 
