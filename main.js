@@ -1,5 +1,5 @@
 let canvas2 = new Gcanvas("canvas2", 300, 200, "white", "test2", "2d", null);
-let canvas = new Gcanvas("canvas", 300, 200, "white", "test", "2d", null);
+
 
 //canvas.drawLine(5,5,100,100,10,"blue");
 
@@ -91,4 +91,4 @@ let lineChart = {
 
 canvas2.debugMode();
 canvas2.drawRingChart(ringChart);
-canvas.drawRingChart(ringChart);
+

@@ -18,7 +18,6 @@ class Gcanvas {
         this.standardColors = [
             '#000',
             '#3f05a',
-
         ]
     }
 
@@ -39,6 +38,7 @@ class Gcanvas {
         this.canvas.setAttribute("id", this.id);
         this.canvas.setAttribute("width", this.width);
         this.canvas.setAttribute("height", this.height);
+        this.canvas.style.position = 'relative';
 
         if(this.backGroundColor != '' && this.backGroundColor != undefined && this.backGroundColor != null) {
             this.canvas.style.backgroundColor = this.backGroundColor;
@@ -460,8 +460,11 @@ class Gcanvas {
             }
             
             //position of the dataBox, when moving the mouse over the canvas
-            dataBox.style.left = e.clientX + 10 + 'px';
-            dataBox.style.top = e.clientY - 5 + 'px';
+            let dataBoxRelativeParent = this.findRelativeParent(this.canvas);
+            console.log(dataBoxRelativeParent);
+            dataBox.style.left = e.pageX - dataBoxRelativeParent.offsetLeft  + "px";
+            dataBox.style.top = e.pageY - dataBoxRelativeParent.offsetTop +  "px";
+            console.log(e.clientX + " " + e.clientY );
 
             //if inside ring, determine what data the mouse is hovering over
             if(this.isInsideRing(pieNumbers.origin_x,pieNumbers.origin_y,mouse.x,mouse.y, pieNumbers.radius_circle, pieNumbers.radius_max)) {
@@ -538,6 +541,21 @@ class Gcanvas {
             arr.push(this.standardColors[i]); 
         }
         return arr;
+    }
+
+    findRelativeParent(element) {
+        let foundRelativeParent = false;
+        if(element && element.offsetParent) {
+            let e = element.offsetParent;
+            if(e.style.position == "relative") {
+                foundRelativeParent = true;
+            }
+            else this.findRelativeParent(e.offsetParent);
+        }
+        else {
+            if(foundRelativeParent) return element;
+            else return this.canvas;
+        }
     }
 
     //svg -> image -> canvas 
