@@ -58,6 +58,9 @@ class Gcanvas {
         this.canvas.style.width  = this.canvas.width  / window.devicePixelRatio + "px";
 
         if(error == 0) this.infoLog("Gcanvas successfully initialized");
+
+        //Version Number
+        console.log("Gcanvas Version 0.0.3");    
     }
 
     debugMode() {
@@ -659,5 +662,33 @@ class Gcanvas {
     }
 };
 
-//Version Number
-console.log("Gcanvas Version 0.0.3");    
+
+
+//------------------------------------------------------
+// Gcanvas SVG 
+// Version 0.0.1
+// Author: Mathias Mantai
+//------------------------------------------------------
+class GcanvasSVG {
+
+    constructor(id, parentId, width, height, ) {
+        this.id = id;
+        this.parentId = parentId;
+        this.parent = document.getElementById(this.parentId);
+        this.width = width;
+        this.height = height;
+
+        //init the element
+        this.init();
+    }
+
+    init() {
+        //create the svg element
+        this.svg = document.createElement("svg");
+        this.svg.id = this.id;
+        this.svg.setAttribute("width", this.width);
+        this.svg.setAttribute("height",this.height);
+        this.parent.appendChild(this.svg);
+    }
+}
+
