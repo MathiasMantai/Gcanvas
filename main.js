@@ -92,4 +92,4 @@
 // canvas2.debugMode();
 // canvas2.drawRingChart(ringChart);
 
-let svg = new GcanvasSVG("svg", "test2", 500, 500)
+let svg = new GcanvasSVG("svg", "test2", 400, 400, "black")

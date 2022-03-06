@@ -671,12 +671,13 @@ class Gcanvas {
 //------------------------------------------------------
 class GcanvasSVG {
 
-    constructor(id, parentId, width, height, ) {
+    constructor(id, parentId, width = 500, height = 500, backgroundColor = "white", ) {
         this.id = id;
         this.parentId = parentId;
         this.parent = document.getElementById(this.parentId);
         this.width = width;
         this.height = height;
+        this.backGroundColor = backgroundColor;
 
         //init the element
         this.init();
@@ -686,9 +687,16 @@ class GcanvasSVG {
         //create the svg element
         this.svg = document.createElement("svg");
         this.svg.id = this.id;
+        //TODO: attributes need default values if no value is given by user;
         this.svg.setAttribute("width", this.width);
         this.svg.setAttribute("height",this.height);
+        this.svg.setAttribute("background-color", this.backGroundColor);
         this.parent.appendChild(this.svg);
     }
+
+    //functions
+    //https://www.mediaevent.de/tutorial/svg-circle-arc.html
+
+    
 }
 
