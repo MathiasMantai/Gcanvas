@@ -671,7 +671,7 @@ class Gcanvas {
 //------------------------------------------------------
 class GcanvasSVG {
 
-    constructor(id, parentId, width = 500, height = 500, backgroundColor = "white", ) {
+    constructor(id, parentId, width = 500, height = 500, backgroundColor = "white") {
         this.id = id;
         this.parentId = parentId;
         this.parent = document.getElementById(this.parentId);
@@ -685,13 +685,34 @@ class GcanvasSVG {
 
     init() {
         //create the svg element
-        this.svg = document.createElement("svg");
+        this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         this.svg.id = this.id;
         //TODO: attributes need default values if no value is given by user;
         this.svg.setAttribute("width", this.width);
         this.svg.setAttribute("height",this.height);
         this.svg.setAttribute("background-color", this.backGroundColor);
         this.parent.appendChild(this.svg);
+    }
+
+    circle(id,origin_x, origin_y, radius, fill) {
+        let element = document.createElementNS("http://www.w3.org/2000/svg","circle");
+        element.id = id;
+        element.setAttribute("cx", origin_x);
+        element.setAttribute("cy", origin_y);
+        element.setAttribute("r", radius);
+        element.setAttribute("fill", fill);
+        this.svg.appendChild(element);
+
+    }
+
+    text(id, className, x, y, text) {
+        let element = document.createElementNS("http://www.w3.org/2000/svg","text");
+        if(id != "") element.id = id;
+        if(className != "") element.classList.add(className);
+        element.setAttribute("x",x);
+        element.setAttribute("y", y);
+        element.innerHTML = text;
+        this.svg.appendChild(element);
     }
 
     //functions
