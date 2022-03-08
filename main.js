@@ -94,4 +94,4 @@
 
 let svg = new GcanvasSVG("svg", "test2", 400, 400, "black")
 svg.circle("zirkel", 200,200,100,"black");
-svg.text("","testtext",5,15,"das ist ein text");
+svg.text("id","testtext",5,15,"das ist ein text");

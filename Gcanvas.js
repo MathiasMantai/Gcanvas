@@ -694,7 +694,8 @@ class GcanvasSVG {
         this.parent.appendChild(this.svg);
     }
 
-    circle(id,origin_x, origin_y, radius, fill) {
+    //todo add stroke options for circle with outline
+    circle(id, className = '', origin_x, origin_y, radius, fill) {
         let element = document.createElementNS("http://www.w3.org/2000/svg","circle");
         element.id = id;
         element.setAttribute("cx", origin_x);
@@ -705,7 +706,7 @@ class GcanvasSVG {
 
     }
 
-    text(id, className, x, y, text) {
+    text(id, className = '', x, y, text) {
         let element = document.createElementNS("http://www.w3.org/2000/svg","text");
         if(id != "") element.id = id;
         if(className != "") element.classList.add(className);
@@ -713,6 +714,14 @@ class GcanvasSVG {
         element.setAttribute("y", y);
         element.innerHTML = text;
         this.svg.appendChild(element);
+    }
+
+    rectangle(id, className = '', x1, y1, x2, y2, fillColor = '', strokeColor  = '') {
+
+    }
+
+    path() {
+        
     }
 
     //functions
