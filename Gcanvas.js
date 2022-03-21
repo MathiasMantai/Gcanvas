@@ -726,6 +726,7 @@ class GcanvasSVG {
 
     //functions
     //https://www.mediaevent.de/tutorial/svg-circle-arc.html
+    //https://www.smashingmagazine.com/2015/07/designing-simple-pie-charts-with-css/
 
     
 }
