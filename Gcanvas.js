@@ -728,6 +728,5 @@ class GcanvasSVG {
     //https://www.mediaevent.de/tutorial/svg-circle-arc.html
     //https://www.smashingmagazine.com/2015/07/designing-simple-pie-charts-with-css/
     //https://heyoka.medium.com/scratch-made-svg-donut-pie-charts-in-html5-2c587e935d72
-    
+    //http://rvlasveld.github.io/blog/2013/07/02/creating-interactive-graphs-with-svg-part-1/
 }
-
